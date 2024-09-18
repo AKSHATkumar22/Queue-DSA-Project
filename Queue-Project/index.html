@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .queue {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+        border: 1px solid #000;
+        border-radius: 5px;
+      }
+      .queue-items {
+        border-color: #000;
+        margin-bottom: 5px;
+        padding: 5px;
+      }
+    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Queue Project</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="queue">
+        <h2>Customer Queue</h2>
+        <div id="queue-items"></div>
+        <!-- Added id here -->
+        <div>
+          <div class="controls">
+            <input
+              type="text"
+              id="new-customer"
+              placeholder="Enter Customer name"
+            />
+            <button onclick="enqueue()">Enqueue</button>
+            <button onclick="dequeue()">Dequeue</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      let CustomerQueue = [];
+      function enqueue() {
+        let newCustomer = document.getElementById("new-customer").value;
+        if (newCustomer.trim() !== "") {
+          CustomerQueue.push(newCustomer);
+          // refresh the display queue
+          displayQueue();
+        }
+
+        // clear the input field
+        document.getElementById("new-customer").value = "";
+      }
+
+      function dequeue() {
+        if (CustomerQueue.length > 0) {
+          // remove the queue from the front
+          let dequeueCustomer = CustomerQueue.shift();
+          //   alert the customer
+          alert("Customer " + dequeueCustomer + " has been served ");
+          //   refresh the queue
+          displayQueue();
+        }
+        // if the queue is empty, alert
+        else {
+          alert("No customer in the queue");
+        }
+      }
+
+      function displayQueue() {
+        // get the queue items container
+        let queueItems = document.getElementById("queue-items");
+        // clear the container to avoid duplicates
+        queueItems.innerHTML = "";
+        CustomerQueue.forEach((customer) => {
+          let queueItem = document.createElement("div");
+          queueItem.className = "queue-items";
+          queueItem.textContent = customer;
+          // append the new queue item to the container
+          queueItems.appendChild(queueItem);
+        });
+      }
+    </script>
+  </body>
+</html>
